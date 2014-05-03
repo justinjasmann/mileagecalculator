@@ -27,11 +27,8 @@ public class MainActivityFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-                DialogFragment dialog = new IntroDialogFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("title", "Welcome!");
-                dialog.setArguments(bundle);
-                dialog.show(getFragmentManager(), "dialogFragment");
+                DialogFragment dialog = new WelcomeDialogFragment();
+                dialog.show(getFragmentManager(), FragmentTags.WELCOME_DIALOG);
             }
         });
         

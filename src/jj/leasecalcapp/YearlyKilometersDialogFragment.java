@@ -3,6 +3,9 @@ package jj.leasecalcapp;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -13,7 +16,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class YearlyKilometersDialogFragment extends DialogFragment
 {
@@ -30,7 +32,12 @@ public class YearlyKilometersDialogFragment extends DialogFragment
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-                Toast.makeText(getActivity(), "'Okay' was clicked", Toast.LENGTH_SHORT).show();
+                FragmentManager fragmentManager = getFragmentManager();
+                Fragment fragment = fragmentManager.findFragmentByTag(FragmentTags.MAIN_ACTIVITY_FRAGMENT);
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.remove(fragment);
+                transaction.add(R.id.container, new ResultsFragment());
+                transaction.commit();
                 dialog.dismiss();
             }
         });

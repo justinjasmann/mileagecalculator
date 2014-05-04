@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
 
     <string name="app_name">LeaseCalcApp</string>
     <string name="action_settings">Settings</string>
@@ -9,5 +10,11 @@
     <string name="yearlyKilometersTitle">Yearly Kilometer Limit</string>
     <string name="okay">Okay</string>
     <string name="cancel">Cancel</string>
+    <string name="purchaseDateLabel">Purchase Date</string>
+    <string name="currentDateLabel">Current Date</string>
+    <string name="timeDiffInDaysLabel">Days</string>
+    <string name="timeDiffInWeeksLabel">Weeks</string>
+    <string name="timeDiffInMonthsLabel">Months</string>
+    <string name="timeDiffInYearsLabel">Years</string>
 
 </resources>

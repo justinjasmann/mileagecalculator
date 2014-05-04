@@ -17,7 +17,7 @@ public class MainActivity extends ActionBarActivity
         {
             getFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, new MainActivityFragment())
+                .add(R.id.container, new MainActivityFragment(), FragmentTags.MAIN_ACTIVITY_FRAGMENT)
                 .commit();
         }
     }

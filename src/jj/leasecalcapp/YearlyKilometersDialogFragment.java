@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -46,6 +47,7 @@ public class YearlyKilometersDialogFragment extends DialogFragment
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
         editText.setBackground(null);
+        editText.setTextSize(TypedValue.DENSITY_DEFAULT, 55);
         return editText;
     }
 

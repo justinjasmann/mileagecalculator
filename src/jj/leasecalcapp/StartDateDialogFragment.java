@@ -34,7 +34,7 @@ public class StartDateDialogFragment extends DialogFragment
                 addSelectedDateToPreferences(dayOfMonth, month, year);
 
                 getFragmentManager().beginTransaction()
-                        .add(new YearlyMileageDialogFragment(), FragmentTags.YEARLY_KILOMETERS_DIALOG)
+                        .add(new YearlyMileageDialogFragment(), FragmentTags.YEARLY_MILEAGE_DIALOG)
                         .commit();
                 dialog.dismiss();
             }

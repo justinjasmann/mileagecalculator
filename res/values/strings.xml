@@ -7,7 +7,7 @@
     <string name="welcomeTitle">Welcome!</string>
     <string name="welcomeText">We see that it\'s your first time here, so we\'re going to have to set some fields.</string>
     <string name="startDateTitle">Lease Start Date</string>
-    <string name="yearlyKilometersTitle">Yearly Kilometer Limit</string>
+    <string name="yearlyMileageTitle">Yearly Mileage Limit</string>
     <string name="okay">Okay</string>
     <string name="cancel">Cancel</string>
     <string name="purchaseDateLabel">Purchase Date</string>

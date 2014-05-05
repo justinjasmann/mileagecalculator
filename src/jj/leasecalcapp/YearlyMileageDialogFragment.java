@@ -26,7 +26,7 @@ public class YearlyMileageDialogFragment extends DialogFragment
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle(R.string.yearlyKilometersTitle);
+        builder.setTitle(R.string.yearlyMileageTitle);
         builder.setView(getEditText());
         builder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener()
         {

@@ -7,17 +7,18 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-public class YearlyKilometersDialogFragment extends DialogFragment
+public class YearlyMileageDialogFragment extends DialogFragment
 {
     private EditText editText;
 
@@ -26,7 +27,7 @@ public class YearlyKilometersDialogFragment extends DialogFragment
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(R.string.yearlyKilometersTitle);
-        builder.setView(getTextView());
+        builder.setView(getEditText());
         builder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener()
         {
             @Override
@@ -34,6 +35,10 @@ public class YearlyKilometersDialogFragment extends DialogFragment
             {
                 FragmentManager fragmentManager = getFragmentManager();
                 Fragment fragment = fragmentManager.findFragmentByTag(FragmentTags.MAIN_ACTIVITY_FRAGMENT);
+
+                /* fix so null pointers don't occur */
+                addYearlyMileageToPreferences(editText.getText().toString());
+
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.remove(fragment);
                 transaction.add(R.id.container, new ResultsFragment());
@@ -46,21 +51,27 @@ public class YearlyKilometersDialogFragment extends DialogFragment
         return builder.create();
     }
 
-    private View getTextView()
+    private EditText getEditText()
     {
         editText = new EditText(getActivity());
-        editText.setLayoutParams(getTextViewLayoutParams());
+        editText.setLayoutParams(getEditTextLayoutParams());
         editText.setGravity(Gravity.CENTER);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
         editText.setBackground(null);
         editText.setTextSize(TypedValue.DENSITY_DEFAULT, 55);
+        if (PreferencesUtil.doPreferencesExist(getActivity(), PreferencesUtil.YEARLY_MILEAGE_KEY)) 
+        {
+            SharedPreferences preferences = PreferencesUtil.getSharedPreferences(getActivity());
+            int yearlyMileage = preferences.getInt(PreferencesUtil.YEARLY_MILEAGE_KEY, 0);
+            editText.setText(String.valueOf(yearlyMileage));
+        }
         return editText;
     }
 
-    private LinearLayout.LayoutParams getTextViewLayoutParams()
+    private LinearLayout.LayoutParams getEditTextLayoutParams()
     {
-        LinearLayout.LayoutParams layoutParams = 
+        LinearLayout.LayoutParams layoutParams =
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -74,5 +85,15 @@ public class YearlyKilometersDialogFragment extends DialogFragment
         Resources resources = getActivity().getResources();
         float density = resources.getDisplayMetrics().density;
         return (int) (dp * density);
+    }
+
+    private void addYearlyMileageToPreferences(String yearlyMileageAsString)
+    {
+        int yearlyMileage = Integer.parseInt(yearlyMileageAsString);
+        SharedPreferences.Editor editor = PreferencesUtil.getSharedPreferencesEditor(getActivity());
+        editor.putInt(PreferencesUtil.YEARLY_MILEAGE_KEY, yearlyMileage);
+        editor.commit();
+        Log.d(YearlyMileageDialogFragment.class.toString(),
+                String.format("adding yearly mileage to prefs: yearlyMileage %d", yearlyMileage));
     }
 }

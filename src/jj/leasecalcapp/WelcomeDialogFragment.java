@@ -18,8 +18,9 @@ public class WelcomeDialogFragment extends DialogFragment
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-                DialogFragment datePickerDialog = new StartDateDialogFragment();
-                datePickerDialog.show(getFragmentManager(), FragmentTags.START_DATE_DIALOG);
+                getFragmentManager().beginTransaction()
+                    .add(new StartDateDialogFragment(), FragmentTags.START_DATE_DIALOG)
+                    .commit();
                 dialog.dismiss();
             }
         });

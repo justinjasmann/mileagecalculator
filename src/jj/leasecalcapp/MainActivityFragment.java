@@ -1,6 +1,5 @@
 package jj.leasecalcapp;
 
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,8 +26,9 @@ public class MainActivityFragment extends Fragment
             @Override
             public void onClick(View view)
             {
-                DialogFragment dialog = new WelcomeDialogFragment();
-                dialog.show(getFragmentManager(), FragmentTags.WELCOME_DIALOG);
+                getFragmentManager().beginTransaction()
+                    .add(new WelcomeDialogFragment(), FragmentTags.WELCOME_DIALOG)
+                    .commit();
             }
         });
         

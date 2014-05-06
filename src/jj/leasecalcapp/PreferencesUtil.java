@@ -8,14 +8,14 @@ public class PreferencesUtil
 {
     private static final String SHARED_PREFERENCES_NAME = "leasecalcapp";
 
-    public static final String DAY_OF_MONTH_KEY = "dayOfMonth";
-    public static final String MONTH_KEY = "month";
-    public static final String YEAR_KEY = "year";
+    public static final String PURCHASE_DATE_DAY_OF_MONTH_KEY = "dayOfMonth";
+    public static final String PURCHASE_DATE_MONTH_KEY = "month";
+    public static final String PURCHASE_DATE_YEAR_KEY = "year";
     public static final String YEARLY_MILEAGE_KEY = "yearlyMileage";
     
     private PreferencesUtil()
     {
-    };
+    }
 
     public static SharedPreferences getSharedPreferences(Context context)
     {
@@ -34,7 +34,7 @@ public class PreferencesUtil
         {
             if (!preferences.contains(key))
             {
-                Log.d(PreferencesUtil.class.toString(), "preference does not exist: " + key);
+                Log.d(PreferencesUtil.class.toString(), String.format("preference %s does not exist: ", key));
                 return false;
             }
         }

@@ -46,7 +46,7 @@ public class YearlyMileageDialogFragment extends DialogFragment
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton(R.string.cancel, new CancelDialogAction(getActivity()));
+        builder.setNegativeButton(R.string.cancel, new CancelDialogAction());
 
         return builder.create();
     }
@@ -94,6 +94,7 @@ public class YearlyMileageDialogFragment extends DialogFragment
         editor.putInt(PreferencesUtil.YEARLY_MILEAGE_KEY, yearlyMileage);
         editor.commit();
         Log.d(YearlyMileageDialogFragment.class.toString(),
-                String.format("adding yearly mileage to prefs: yearlyMileage %d", yearlyMileage));
+                String.format("adding to prefs: '%s' %d", 
+                        PreferencesUtil.YEARLY_MILEAGE_KEY, yearlyMileage));
     }
 }

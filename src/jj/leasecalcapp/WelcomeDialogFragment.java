@@ -24,7 +24,7 @@ public class WelcomeDialogFragment extends DialogFragment
                 dialog.dismiss();
             }
         });
-        dialogBuilder.setNegativeButton(R.string.cancel, new CancelDialogAction(getActivity()));
+        dialogBuilder.setNegativeButton(R.string.cancel, new CancelDialogAction());
         return dialogBuilder.create();
     }
 }

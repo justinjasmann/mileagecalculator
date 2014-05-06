@@ -28,8 +28,6 @@ public class StartDateDialogFragment extends DialogFragment
                 int dayOfMonth = datePicker.getDayOfMonth();
                 int month = datePicker.getMonth();
                 int year = datePicker.getYear();
-                Log.d(StartDateDialogFragment.class.toString(),
-                        String.format("dayOfMonth: %d, month: %d, year: %d", dayOfMonth, month, year));
 
                 addSelectedDateToPreferences(dayOfMonth, month, year);
 
@@ -39,7 +37,7 @@ public class StartDateDialogFragment extends DialogFragment
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton(R.string.cancel, new CancelDialogAction(getActivity()));
+        builder.setNegativeButton(R.string.cancel, new CancelDialogAction());
 
         return builder.create();
     }
@@ -50,14 +48,14 @@ public class StartDateDialogFragment extends DialogFragment
         datePicker.setSpinnersShown(true);
         datePicker.setCalendarViewShown(false);
         if (PreferencesUtil.doPreferencesExist(getActivity(), 
-                PreferencesUtil.DAY_OF_MONTH_KEY, 
-                PreferencesUtil.MONTH_KEY, 
-                PreferencesUtil.YEAR_KEY))
+                PreferencesUtil.PURCHASE_DATE_DAY_OF_MONTH_KEY, 
+                PreferencesUtil.PURCHASE_DATE_MONTH_KEY, 
+                PreferencesUtil.PURCHASE_DATE_YEAR_KEY))
         {
             SharedPreferences preferences = PreferencesUtil.getSharedPreferences(getActivity());
-            int dayOfMonth = preferences.getInt(PreferencesUtil.DAY_OF_MONTH_KEY, 1);
-            int month = preferences.getInt(PreferencesUtil.MONTH_KEY, 1);
-            int year = preferences.getInt(PreferencesUtil.YEAR_KEY, 1999);
+            int dayOfMonth = preferences.getInt(PreferencesUtil.PURCHASE_DATE_DAY_OF_MONTH_KEY, 1);
+            int month = preferences.getInt(PreferencesUtil.PURCHASE_DATE_MONTH_KEY, 1);
+            int year = preferences.getInt(PreferencesUtil.PURCHASE_DATE_YEAR_KEY, 1999);
             datePicker.updateDate(year, month, dayOfMonth);
         }
         return datePicker;
@@ -66,11 +64,14 @@ public class StartDateDialogFragment extends DialogFragment
     private void addSelectedDateToPreferences(int dayOfMonth, int month, int year)
     {
         SharedPreferences.Editor editor = PreferencesUtil.getSharedPreferencesEditor(getActivity());
-        editor.putInt(PreferencesUtil.DAY_OF_MONTH_KEY, dayOfMonth);
-        editor.putInt(PreferencesUtil.MONTH_KEY, month);
-        editor.putInt(PreferencesUtil.YEAR_KEY, year);
+        editor.putInt(PreferencesUtil.PURCHASE_DATE_DAY_OF_MONTH_KEY, dayOfMonth);
+        editor.putInt(PreferencesUtil.PURCHASE_DATE_MONTH_KEY, month);
+        editor.putInt(PreferencesUtil.PURCHASE_DATE_YEAR_KEY, year);
         editor.commit();
         Log.d(StartDateDialogFragment.class.toString(), 
-                String.format("adding date fields to prefs: dayOfMonth %d month: %d year %d", dayOfMonth, month, year));
+                String.format("adding to prefs: '%s' %d '%s' %d '%s' %d", 
+                        PreferencesUtil.PURCHASE_DATE_DAY_OF_MONTH_KEY, dayOfMonth, 
+                        PreferencesUtil.PURCHASE_DATE_MONTH_KEY, month, 
+                        PreferencesUtil.PURCHASE_DATE_YEAR_KEY, year));
     }
 }

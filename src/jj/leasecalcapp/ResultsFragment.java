@@ -42,18 +42,22 @@ public class ResultsFragment extends Fragment
         timeDiffInYears = (TextView) rootView.findViewById(R.id.timeDiffInYears);
         targetMileage = (TextView) rootView.findViewById(R.id.target_mileage);
 
-        SharedPreferences preferences = PreferencesUtil.getSharedPreferences(getActivity());
-        int purchaseDateDayOfMonth = preferences.getInt(PreferencesUtil.PURCHASE_DATE_DAY_OF_MONTH_KEY, 1);
-        int purchaseDateMonth = preferences.getInt(PreferencesUtil.PURCHASE_DATE_MONTH_KEY, 1);
-        int purchaseDateYear = preferences.getInt(PreferencesUtil.PURCHASE_DATE_YEAR_KEY, 1999);
-        int yearlyMileage = preferences.getInt(PreferencesUtil.YEARLY_MILEAGE_KEY, 0);
+        if (PreferencesUtil.doPreferencesExist(getActivity(), PreferencesUtil.PURCHASE_DATE_DAY_OF_MONTH_KEY,
+                PreferencesUtil.PURCHASE_DATE_MONTH_KEY, PreferencesUtil.PURCHASE_DATE_YEAR_KEY,
+                PreferencesUtil.YEARLY_MILEAGE_KEY))
+        {
+            SharedPreferences preferences = PreferencesUtil.getSharedPreferences(getActivity());
+            int purchaseDateDayOfMonth = preferences.getInt(PreferencesUtil.PURCHASE_DATE_DAY_OF_MONTH_KEY, 1);
+            int purchaseDateMonth = preferences.getInt(PreferencesUtil.PURCHASE_DATE_MONTH_KEY, 1);
+            int purchaseDateYear = preferences.getInt(PreferencesUtil.PURCHASE_DATE_YEAR_KEY, 1999);
+            int yearlyMileage = preferences.getInt(PreferencesUtil.YEARLY_MILEAGE_KEY, 0);
+            Results results = getResults(purchaseDateDayOfMonth, purchaseDateMonth, purchaseDateYear, yearlyMileage);
+            updateUi(results);
+        }
 
-        Results results = getResults(purchaseDateDayOfMonth, purchaseDateMonth, purchaseDateYear, yearlyMileage);
-        updateUi(results);
-        
         return rootView;
     }
-    
+
     private void updateUi(Results results)
     {
         purchaseDate.setText(results.getPurchaseDate());
@@ -67,8 +71,7 @@ public class ResultsFragment extends Fragment
 
     private Results getResults(int dayOfMonth, int month, int year, int yearlyMileage)
     {
-        DateTime purchaseDateTime =
-                new DateTime(year, month + 1, dayOfMonth, 11, 0);
+        DateTime purchaseDateTime = new DateTime(year, month + 1, dayOfMonth, 11, 0);
         DateTime currentDateTime = new DateTime();
 
         int daysDelta = Days.daysBetween(purchaseDateTime, currentDateTime).getDays();
@@ -78,7 +81,8 @@ public class ResultsFragment extends Fragment
         int targetMileageInt = getTargetMileage(yearlyMileage, daysDelta);
 
         logDetails(purchaseDateTime, currentDateTime, daysDelta, weeksDelta, monthsDelta, yearsDelta, targetMileageInt);
-        return new Results(purchaseDateTime, currentDateTime, daysDelta, weeksDelta, monthsDelta, yearsDelta, targetMileageInt);
+        return new Results(purchaseDateTime, currentDateTime, daysDelta, weeksDelta, monthsDelta, yearsDelta,
+                targetMileageInt);
     }
 
     private int getTargetMileage(int yearlyMileage, int daysDelta)
@@ -87,9 +91,8 @@ public class ResultsFragment extends Fragment
         return (int) (mileagePerDay * daysDelta);
     }
 
-    private void logDetails(
-            DateTime purchaseDateTime, DateTime currentDateTime,
-            int daysDelta, int weeksDelta, int monthsDelta, int yearsDelta, int targetMileage)
+    private void logDetails(DateTime purchaseDateTime, DateTime currentDateTime, int daysDelta, int weeksDelta,
+            int monthsDelta, int yearsDelta, int targetMileage)
     {
         String tag = ResultsFragment.class.toString();
         Log.d(tag, purchaseDateTime.toLocalDate().toString());

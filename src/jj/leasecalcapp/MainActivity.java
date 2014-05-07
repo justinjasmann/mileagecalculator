@@ -1,5 +1,6 @@
 package jj.leasecalcapp;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -15,11 +16,20 @@ public class MainActivity extends ActionBarActivity
 
         if (savedInstanceState == null)
         {
-            getFragmentManager()
-                .beginTransaction()
-                .add(R.id.container, new MainActivityFragment(), FragmentTags.MAIN_ACTIVITY_FRAGMENT)
-                .commit();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            if (!PreferencesUtil.doPreferencesExist(this, PreferencesUtil.PURCHASE_DATE_DAY_OF_MONTH_KEY,
+                    PreferencesUtil.PURCHASE_DATE_MONTH_KEY, PreferencesUtil.PURCHASE_DATE_YEAR_KEY,
+                    PreferencesUtil.YEARLY_MILEAGE_KEY))
+            {
+                transaction.add(new WelcomeDialogFragment(), FragmentTags.WELCOME_DIALOG);
+            }
+            else
+            {
+                transaction.add(R.id.container, new ResultsFragment(), FragmentTags.RESULTS_FRAGMENT);
+            }
+            transaction.commit();
         }
+        
     }
 
     @Override

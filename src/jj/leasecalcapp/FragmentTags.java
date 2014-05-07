@@ -7,4 +7,5 @@ public class FragmentTags
     public static final String WELCOME_DIALOG = "welcomeDialog";
     public static final String START_DATE_DIALOG = "startDateDialog";
     public static final String YEARLY_MILEAGE_DIALOG = "yearlyMileageDialog";
+    public static final String RESULTS_FRAGMENT = "resultsFragment";
 }

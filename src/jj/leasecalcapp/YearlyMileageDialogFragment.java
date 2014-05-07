@@ -3,9 +3,6 @@ package jj.leasecalcapp;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -15,6 +12,7 @@ import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -33,22 +31,20 @@ public class YearlyMileageDialogFragment extends DialogFragment
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-                FragmentManager fragmentManager = getFragmentManager();
-                Fragment fragment = fragmentManager.findFragmentByTag(FragmentTags.MAIN_ACTIVITY_FRAGMENT);
-
                 /* fix so null pointers don't occur */
                 addYearlyMileageToPreferences(editText.getText().toString());
-
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.remove(fragment);
-                transaction.add(R.id.container, new ResultsFragment());
-                transaction.commit();
+                
+                getFragmentManager().beginTransaction()
+                    .add(R.id.container, new ResultsFragment(), FragmentTags.RESULTS_FRAGMENT)
+                    .commit();
                 dialog.dismiss();
             }
         });
         builder.setNegativeButton(R.string.cancel, new CancelDialogAction());
 
-        return builder.create();
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        return dialog;
     }
 
     private EditText getEditText()

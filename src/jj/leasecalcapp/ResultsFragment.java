@@ -42,9 +42,7 @@ public class ResultsFragment extends Fragment
         timeDiffInYears = (TextView) rootView.findViewById(R.id.timeDiffInYears);
         targetMileage = (TextView) rootView.findViewById(R.id.target_mileage);
 
-        if (PreferencesUtil.doPreferencesExist(getActivity(), PreferencesUtil.PURCHASE_DATE_DAY_OF_MONTH_KEY,
-                PreferencesUtil.PURCHASE_DATE_MONTH_KEY, PreferencesUtil.PURCHASE_DATE_YEAR_KEY,
-                PreferencesUtil.YEARLY_MILEAGE_KEY))
+        if (!FirstTimeHelper.isFirstTime(getActivity()))
         {
             SharedPreferences preferences = PreferencesUtil.getSharedPreferences(getActivity());
             int purchaseDateDayOfMonth = preferences.getInt(PreferencesUtil.PURCHASE_DATE_DAY_OF_MONTH_KEY, 1);

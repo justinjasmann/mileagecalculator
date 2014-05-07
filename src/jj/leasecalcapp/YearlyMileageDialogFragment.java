@@ -56,7 +56,7 @@ public class YearlyMileageDialogFragment extends DialogFragment
         editText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
         editText.setBackground(null);
         editText.setTextSize(TypedValue.DENSITY_DEFAULT, 55);
-        if (PreferencesUtil.doPreferencesExist(getActivity(), PreferencesUtil.YEARLY_MILEAGE_KEY)) 
+        if (!FirstTimeHelper.isFirstTime(getActivity())) 
         {
             SharedPreferences preferences = PreferencesUtil.getSharedPreferences(getActivity());
             int yearlyMileage = preferences.getInt(PreferencesUtil.YEARLY_MILEAGE_KEY, 0);

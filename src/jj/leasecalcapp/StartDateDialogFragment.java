@@ -47,10 +47,7 @@ public class StartDateDialogFragment extends DialogFragment
         datePicker = new DatePicker(getActivity());
         datePicker.setSpinnersShown(true);
         datePicker.setCalendarViewShown(false);
-        if (PreferencesUtil.doPreferencesExist(getActivity(), 
-                PreferencesUtil.PURCHASE_DATE_DAY_OF_MONTH_KEY, 
-                PreferencesUtil.PURCHASE_DATE_MONTH_KEY, 
-                PreferencesUtil.PURCHASE_DATE_YEAR_KEY))
+        if (!FirstTimeHelper.isFirstTime(getActivity()))
         {
             SharedPreferences preferences = PreferencesUtil.getSharedPreferences(getActivity());
             int dayOfMonth = preferences.getInt(PreferencesUtil.PURCHASE_DATE_DAY_OF_MONTH_KEY, 1);

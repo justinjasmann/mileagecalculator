@@ -17,9 +17,7 @@ public class MainActivity extends ActionBarActivity
         if (savedInstanceState == null)
         {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if (!PreferencesUtil.doPreferencesExist(this, PreferencesUtil.PURCHASE_DATE_DAY_OF_MONTH_KEY,
-                    PreferencesUtil.PURCHASE_DATE_MONTH_KEY, PreferencesUtil.PURCHASE_DATE_YEAR_KEY,
-                    PreferencesUtil.YEARLY_MILEAGE_KEY))
+            if (FirstTimeHelper.isFirstTime(this))
             {
                 transaction.add(new WelcomeDialogFragment(), FragmentTags.WELCOME_DIALOG);
             }

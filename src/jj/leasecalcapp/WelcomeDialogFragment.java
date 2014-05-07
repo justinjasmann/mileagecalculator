@@ -24,7 +24,16 @@ public class WelcomeDialogFragment extends DialogFragment
                 dialog.dismiss();
             }
         });
-        dialogBuilder.setNegativeButton(R.string.cancel, new CancelDialogAction());
+        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+                getActivity().finish();
+            }
+        });
         return dialogBuilder.create();
     }
 }

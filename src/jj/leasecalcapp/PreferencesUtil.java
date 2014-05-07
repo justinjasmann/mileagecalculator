@@ -40,4 +40,10 @@ public class PreferencesUtil
         }
         return true;
     }
+    
+    public static void resetAll(Context context)
+    {
+        SharedPreferences.Editor editor = getSharedPreferencesEditor(context);
+        editor.clear().commit();
+    }
 }

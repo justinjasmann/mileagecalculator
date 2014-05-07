@@ -1,18 +1,26 @@
 package jj.leasecalcapp;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity
 {
+    private static final int SETTINGS_ACTIVITY_REQUEST = 6459;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         if (savedInstanceState == null)
         {
@@ -27,7 +35,7 @@ public class MainActivity extends ActionBarActivity
             }
             transaction.commit();
         }
-        
+
     }
 
     @Override
@@ -43,8 +51,26 @@ public class MainActivity extends ActionBarActivity
         int id = item.getItemId();
         if (id == R.id.action_settings)
         {
-            return true;
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivityForResult(intent, SETTINGS_ACTIVITY_REQUEST);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == SETTINGS_ACTIVITY_REQUEST)
+        {
+            FragmentManager fragmentManager = getFragmentManager();
+            Fragment resultsFragment = fragmentManager.findFragmentByTag(FragmentTags.RESULTS_FRAGMENT);
+            if (null != resultsFragment)
+            {
+                fragmentManager.beginTransaction()
+                    .remove(resultsFragment)
+                    .add(new WelcomeDialogFragment(), FragmentTags.WELCOME_DIALOG)
+                    .commit();
+            }
+        }
     }
 }

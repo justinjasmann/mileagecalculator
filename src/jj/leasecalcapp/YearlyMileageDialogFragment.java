@@ -12,14 +12,49 @@ import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class YearlyMileageDialogFragment extends DialogFragment
 {
     private EditText editText;
 
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        final AlertDialog alertDialog = (AlertDialog) getDialog();
+        if (alertDialog != null)
+        {
+            Button positiveButton = (Button) alertDialog.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    String yearlyMileageAsString = editText.getText().toString();
+                    if (!yearlyMileageAsString.isEmpty())
+                    {
+                        addYearlyMileageToPreferences(yearlyMileageAsString);
+                        getFragmentManager().beginTransaction()
+                                .add(R.id.container, new ResultsFragment(), FragmentTags.RESULTS_FRAGMENT)
+                                .commit();
+                        alertDialog.dismiss();
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(), "Yearly mileage cannot be empty.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -31,13 +66,8 @@ public class YearlyMileageDialogFragment extends DialogFragment
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-                /* fix so null pointers don't occur */
-                addYearlyMileageToPreferences(editText.getText().toString());
-                
-                getFragmentManager().beginTransaction()
-                    .add(R.id.container, new ResultsFragment(), FragmentTags.RESULTS_FRAGMENT)
-                    .commit();
-                dialog.dismiss();
+                // intentionally left empty so we receive an 'okay' button
+                // default functionality overriden above
             }
         });
         builder.setNegativeButton(R.string.cancel, new CancelDialogAction());
@@ -56,7 +86,7 @@ public class YearlyMileageDialogFragment extends DialogFragment
         editText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
         editText.setBackground(null);
         editText.setTextSize(TypedValue.DENSITY_DEFAULT, 55);
-        if (!FirstTimeHelper.isFirstTime(getActivity())) 
+        if (!FirstTimeHelper.isFirstTime(getActivity()))
         {
             SharedPreferences preferences = PreferencesUtil.getSharedPreferences(getActivity());
             int yearlyMileage = preferences.getInt(PreferencesUtil.YEARLY_MILEAGE_KEY, 0);
@@ -67,7 +97,7 @@ public class YearlyMileageDialogFragment extends DialogFragment
 
     private LinearLayout.LayoutParams getEditTextLayoutParams()
     {
-        LinearLayout.LayoutParams layoutParams =
+        LinearLayout.LayoutParams layoutParams = 
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -90,7 +120,6 @@ public class YearlyMileageDialogFragment extends DialogFragment
         editor.putInt(PreferencesUtil.YEARLY_MILEAGE_KEY, yearlyMileage);
         editor.commit();
         Log.d(YearlyMileageDialogFragment.class.toString(),
-                String.format("adding to prefs: '%s' %d", 
-                        PreferencesUtil.YEARLY_MILEAGE_KEY, yearlyMileage));
+                String.format("adding to prefs: '%s' %d", PreferencesUtil.YEARLY_MILEAGE_KEY, yearlyMileage));
     }
 }

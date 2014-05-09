@@ -23,7 +23,7 @@ public class SettingsFragment extends PreferenceFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         LinearLayout linearLayout = (LinearLayout) super.onCreateView(inflater, container, savedInstanceState);
-        resetData = new Button(getActivity().getApplicationContext());
+        resetData = new Button(getActivity());
         resetData.setText(R.string.button_reset);
         resetData.setOnClickListener(new View.OnClickListener()
         {

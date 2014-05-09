@@ -38,7 +38,6 @@ public class StartDateDialogFragment extends DialogFragment
             }
         });
         builder.setNegativeButton(R.string.cancel, new CancelDialogAction());
-
         return builder.create();
     }
 

@@ -24,21 +24,21 @@
 
             <TextView
                 android:id="@+id/purchaseDateLabel"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:paddingRight="10dp"
                 android:text="@string/purchaseDateLabel"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
                 android:id="@+id/currentDateLabel"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:paddingRight="10dp"
                 android:text="@string/currentDateLabel"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
                 android:id="@+id/timeDiffInDaysLabel"
@@ -47,7 +47,7 @@
                 android:gravity="right"
                 android:paddingRight="10dp"
                 android:text="@string/timeDiffInDaysLabel"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
                 android:id="@+id/timeDiffInWeeksLabel"
@@ -56,7 +56,7 @@
                 android:gravity="right"
                 android:paddingRight="10dp"
                 android:text="@string/timeDiffInWeeksLabel"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
                 android:id="@+id/timeDiffInMonthsLabel"
@@ -65,7 +65,7 @@
                 android:gravity="right"
                 android:paddingRight="10dp"
                 android:text="@string/timeDiffInMonthsLabel"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
                 android:id="@+id/timeDiffInYearsLabel"
@@ -74,7 +74,8 @@
                 android:gravity="right"
                 android:paddingRight="10dp"
                 android:text="@string/timeDiffInYearsLabel"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="@dimen/results_fragment_row_font_size" />
+
         </LinearLayout>
 
         <View
@@ -97,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:paddingLeft="10dp"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
                 android:id="@+id/currentDate"
@@ -105,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:paddingLeft="10dp"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
                 android:id="@+id/timeDiffInDays"
@@ -113,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:paddingLeft="10dp"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
                 android:id="@+id/timeDiffInWeeks"
@@ -121,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:paddingLeft="10dp"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
                 android:id="@+id/timeDiffInMonths"
@@ -129,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:paddingLeft="10dp"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
                 android:id="@+id/timeDiffInYears"
@@ -137,7 +138,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:paddingLeft="10dp"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textSize="@dimen/results_fragment_row_font_size" />
+
         </LinearLayout>
     </LinearLayout>
 
@@ -153,7 +155,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textSize="@dimen/results_fragment_target_mileage_font_size" />
 
     </LinearLayout>
 

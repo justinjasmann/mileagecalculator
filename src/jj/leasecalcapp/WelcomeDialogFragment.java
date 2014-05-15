@@ -18,12 +18,17 @@ public class WelcomeDialogFragment extends DialogFragment
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
+                StartDateDialogFragment startDateDialogFragment = new StartDateDialogFragment();
+                startDateDialogFragment.setCancelable(false);
                 getFragmentManager().beginTransaction()
-                    .add(new StartDateDialogFragment(), FragmentTags.START_DATE_DIALOG)
+                    .add(startDateDialogFragment, FragmentTags.START_DATE_DIALOG)
                     .commit();
                 dialog.dismiss();
             }
         });
-        return dialogBuilder.create();
+        
+        Dialog dialog = dialogBuilder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 }

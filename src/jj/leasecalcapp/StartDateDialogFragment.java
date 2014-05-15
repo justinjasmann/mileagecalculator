@@ -31,14 +31,18 @@ public class StartDateDialogFragment extends DialogFragment
 
                 addSelectedDateToPreferences(dayOfMonth, month, year);
 
+                YearlyMileageDialogFragment yearlyMileageDialogFragment = new YearlyMileageDialogFragment();
+                yearlyMileageDialogFragment.setCancelable(false);
                 getFragmentManager().beginTransaction()
-                        .add(new YearlyMileageDialogFragment(), FragmentTags.YEARLY_MILEAGE_DIALOG)
+                        .add(yearlyMileageDialogFragment, FragmentTags.YEARLY_MILEAGE_DIALOG)
                         .commit();
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton(R.string.cancel, new CancelDialogAction());
-        return builder.create();
+        
+        Dialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 
     private View getDatePicker()

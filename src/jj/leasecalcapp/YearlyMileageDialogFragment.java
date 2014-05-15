@@ -70,9 +70,9 @@ public class YearlyMileageDialogFragment extends DialogFragment
                 // default functionality overriden above
             }
         });
-        builder.setNegativeButton(R.string.cancel, new CancelDialogAction());
 
-        AlertDialog dialog = builder.create();
+        Dialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         return dialog;
     }

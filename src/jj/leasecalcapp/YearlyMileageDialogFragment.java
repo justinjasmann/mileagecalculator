@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
@@ -40,6 +39,7 @@ public class YearlyMileageDialogFragment extends DialogFragment
                     if (!yearlyMileageAsString.isEmpty())
                     {
                         addYearlyMileageToPreferences(yearlyMileageAsString);
+                        
                         getFragmentManager().beginTransaction()
                                 .add(R.id.container, new ResultsFragment(), FragmentTags.RESULTS_FRAGMENT)
                                 .commit();
@@ -67,12 +67,12 @@ public class YearlyMileageDialogFragment extends DialogFragment
             public void onClick(DialogInterface dialog, int which)
             {
                 // intentionally left empty so we receive an 'okay' button
-                // default functionality overriden above
             }
         });
 
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnKeyListener(new ActivityKiller(getActivity()));
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         return dialog;
     }
@@ -101,16 +101,9 @@ public class YearlyMileageDialogFragment extends DialogFragment
                 new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
-        int marginInPixels = dpToPixels(5);
+        int marginInPixels = PixelsHelper.dpToPixels(getActivity(), 5);
         layoutParams.setMargins(marginInPixels, marginInPixels, marginInPixels, marginInPixels);
         return layoutParams;
-    }
-
-    private int dpToPixels(int dp)
-    {
-        Resources resources = getActivity().getResources();
-        float density = resources.getDisplayMetrics().density;
-        return (int) (dp * density);
     }
 
     private void addYearlyMileageToPreferences(String yearlyMileageAsString)

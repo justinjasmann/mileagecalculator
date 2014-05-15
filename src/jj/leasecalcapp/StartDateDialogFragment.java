@@ -28,7 +28,7 @@ public class StartDateDialogFragment extends DialogFragment
                 int dayOfMonth = datePicker.getDayOfMonth();
                 int month = datePicker.getMonth();
                 int year = datePicker.getYear();
-
+                
                 addSelectedDateToPreferences(dayOfMonth, month, year);
 
                 YearlyMileageDialogFragment yearlyMileageDialogFragment = new YearlyMileageDialogFragment();
@@ -36,12 +36,12 @@ public class StartDateDialogFragment extends DialogFragment
                 getFragmentManager().beginTransaction()
                         .add(yearlyMileageDialogFragment, FragmentTags.YEARLY_MILEAGE_DIALOG)
                         .commit();
-                dialog.dismiss();
             }
         });
         
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnKeyListener(new ActivityKiller(getActivity()));
         return dialog;
     }
 

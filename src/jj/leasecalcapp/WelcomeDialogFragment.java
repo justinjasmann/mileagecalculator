@@ -21,14 +21,14 @@ public class WelcomeDialogFragment extends DialogFragment
                 StartDateDialogFragment startDateDialogFragment = new StartDateDialogFragment();
                 startDateDialogFragment.setCancelable(false);
                 getFragmentManager().beginTransaction()
-                    .add(startDateDialogFragment, FragmentTags.START_DATE_DIALOG)
-                    .commit();
-                dialog.dismiss();
+                        .add(startDateDialogFragment, FragmentTags.START_DATE_DIALOG)
+                        .commit();
             }
         });
-        
+
         Dialog dialog = dialogBuilder.create();
         dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnKeyListener(new ActivityKiller(getActivity()));
         return dialog;
     }
 }

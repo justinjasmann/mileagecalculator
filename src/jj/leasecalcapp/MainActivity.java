@@ -28,7 +28,6 @@ public class MainActivity extends ActionBarActivity
             if (FirstTimeHelper.isFirstTime(this))
             {
                 WelcomeDialogFragment welcomeDialogFragment = new WelcomeDialogFragment();
-                welcomeDialogFragment.setCancelable(false);
                 transaction.add(welcomeDialogFragment, FragmentTags.WELCOME_DIALOG);
             }
             else

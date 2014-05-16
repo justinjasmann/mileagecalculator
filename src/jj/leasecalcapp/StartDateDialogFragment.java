@@ -3,6 +3,7 @@ package jj.leasecalcapp;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,20 +29,21 @@ public class StartDateDialogFragment extends DialogFragment
                 int dayOfMonth = datePicker.getDayOfMonth();
                 int month = datePicker.getMonth();
                 int year = datePicker.getYear();
-                
                 addSelectedDateToPreferences(dayOfMonth, month, year);
 
                 YearlyMileageDialogFragment yearlyMileageDialogFragment = new YearlyMileageDialogFragment();
                 yearlyMileageDialogFragment.setCancelable(false);
-                getFragmentManager().beginTransaction()
-                        .add(yearlyMileageDialogFragment, FragmentTags.YEARLY_MILEAGE_DIALOG)
-                        .commit();
+
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.add(yearlyMileageDialogFragment, FragmentTags.YEARLY_MILEAGE_DIALOG);
+                fragmentTransaction.addToBackStack(FragmentTags.YEARLY_MILEAGE_DIALOG);
+                fragmentTransaction.commit();
             }
         });
         
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setOnKeyListener(new ActivityKiller(getActivity()));
+        dialog.setOnKeyListener(new BackStackPopper(getActivity()));
         return dialog;
     }
 

@@ -21,24 +21,25 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
+        
         if (savedInstanceState == null)
         {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             if (FirstTimeHelper.isFirstTime(this))
             {
                 WelcomeDialogFragment welcomeDialogFragment = new WelcomeDialogFragment();
-                transaction.add(welcomeDialogFragment, FragmentTags.WELCOME_DIALOG);
+                welcomeDialogFragment.setCancelable(false);
+                transaction.add(new WelcomeDialogFragment(), FragmentTags.WELCOME_DIALOG);
             }
             else
             {
                 transaction.add(R.id.container, new ResultsFragment(), FragmentTags.RESULTS_FRAGMENT);
             }
+            transaction.addToBackStack(FragmentTags.WELCOME_DIALOG);
             transaction.commit();
         }
-
     }
-
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -67,10 +68,16 @@ public class MainActivity extends ActionBarActivity
             Fragment resultsFragment = fragmentManager.findFragmentByTag(FragmentTags.RESULTS_FRAGMENT);
             if (null != resultsFragment)
             {
-                fragmentManager.beginTransaction()
-                    .remove(resultsFragment)
-                    .add(new WelcomeDialogFragment(), FragmentTags.WELCOME_DIALOG)
-                    .commit();
+                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.remove(resultsFragment);
+                
+                WelcomeDialogFragment welcomeDialogFragment = new WelcomeDialogFragment();
+                welcomeDialogFragment.setCancelable(false);
+                fragmentTransaction.add(welcomeDialogFragment, FragmentTags.WELCOME_DIALOG);
+                fragmentTransaction.addToBackStack(FragmentTags.WELCOME_DIALOG);
+                fragmentTransaction.commit();
             }
         }
     }

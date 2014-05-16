@@ -72,8 +72,8 @@ public class YearlyMileageDialogFragment extends DialogFragment
 
         Dialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setOnKeyListener(new ActivityKiller(getActivity()));
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        dialog.setOnKeyListener(new BackStackPopper(getActivity()));
         return dialog;
     }
 

@@ -3,6 +3,7 @@ package jj.leasecalcapp;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -20,9 +21,11 @@ public class WelcomeDialogFragment extends DialogFragment
             {
                 StartDateDialogFragment startDateDialogFragment = new StartDateDialogFragment();
                 startDateDialogFragment.setCancelable(false);
-                getFragmentManager().beginTransaction()
-                        .add(startDateDialogFragment, FragmentTags.START_DATE_DIALOG)
-                        .commit();
+                
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.add(startDateDialogFragment, FragmentTags.START_DATE_DIALOG);
+                fragmentTransaction.addToBackStack(FragmentTags.START_DATE_DIALOG);
+                fragmentTransaction.commit();
             }
         });
 

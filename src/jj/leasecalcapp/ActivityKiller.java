@@ -17,7 +17,7 @@ public class ActivityKiller implements DialogInterface.OnKeyListener
     @Override
     public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event)
     {
-        if (keyCode == KeyEvent.KEYCODE_BACK)
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN)
         {
             Log.d(ActivityKiller.class.getName(), "KILLING ACTIVITY");
             dialog.dismiss();

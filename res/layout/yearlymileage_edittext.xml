@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/yearlymileage_edittext"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    android:gravity="center"
+    android:inputType="number"
+    android:labelFor="@null"
+    android:paddingTop="5dp"
+    android:textSize="@dimen/yearly_mileage_fragment_edittext_font_size" />

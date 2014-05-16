@@ -6,16 +6,13 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class YearlyMileageDialogFragment extends DialogFragment
@@ -43,6 +40,10 @@ public class YearlyMileageDialogFragment extends DialogFragment
                         getFragmentManager().beginTransaction()
                                 .add(R.id.container, new ResultsFragment(), FragmentTags.RESULTS_FRAGMENT)
                                 .commit();
+                        
+                        /*
+                         * because we're overriding the default 'okay' functionality, 'dismiss' isn't called by default
+                         */
                         alertDialog.dismiss();
                     }
                     else
@@ -57,10 +58,11 @@ public class YearlyMileageDialogFragment extends DialogFragment
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
+        editText = getEditText();
+        
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         builder.setTitle(R.string.yearlyMileageTitle);
-        builder.setView(getEditText());
+        builder.setView(editText);
         builder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener()
         {
             @Override
@@ -79,13 +81,9 @@ public class YearlyMileageDialogFragment extends DialogFragment
 
     private EditText getEditText()
     {
-        editText = new EditText(getActivity());
-        editText.setLayoutParams(getEditTextLayoutParams());
-        editText.setGravity(Gravity.CENTER);
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        EditText editText = (EditText) inflater.inflate(R.layout.yearlymileage_edittext, null);
         editText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-        editText.setBackground(null);
-        editText.setTextSize(TypedValue.DENSITY_DEFAULT, 55);
         if (!FirstTimeHelper.isFirstTime(getActivity()))
         {
             SharedPreferences preferences = PreferencesUtil.getSharedPreferences(getActivity());
@@ -93,17 +91,6 @@ public class YearlyMileageDialogFragment extends DialogFragment
             editText.setText(String.valueOf(yearlyMileage));
         }
         return editText;
-    }
-
-    private LinearLayout.LayoutParams getEditTextLayoutParams()
-    {
-        LinearLayout.LayoutParams layoutParams = 
-                new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-        int marginInPixels = PixelsHelper.dpToPixels(getActivity(), 5);
-        layoutParams.setMargins(marginInPixels, marginInPixels, marginInPixels, marginInPixels);
-        return layoutParams;
     }
 
     private void addYearlyMileageToPreferences(String yearlyMileageAsString)

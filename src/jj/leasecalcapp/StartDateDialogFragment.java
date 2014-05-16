@@ -8,7 +8,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.view.LayoutInflater;
 import android.widget.DatePicker;
 
 public class StartDateDialogFragment extends DialogFragment
@@ -17,10 +17,12 @@ public class StartDateDialogFragment extends DialogFragment
 
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
+        datePicker = getDatePicker();
+        
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(R.string.startDateTitle);
-        builder.setView(getDatePicker());
+        builder.setView(datePicker);
         builder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener()
         {
             @Override
@@ -47,11 +49,10 @@ public class StartDateDialogFragment extends DialogFragment
         return dialog;
     }
 
-    private View getDatePicker()
+    private DatePicker getDatePicker()
     {
-        datePicker = new DatePicker(getActivity());
-        datePicker.setSpinnersShown(true);
-        datePicker.setCalendarViewShown(false);
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        DatePicker datePicker = (DatePicker) inflater.inflate(R.layout.startdate_datepicker, null);
         if (!FirstTimeHelper.isFirstTime(getActivity()))
         {
             SharedPreferences preferences = PreferencesUtil.getSharedPreferences(getActivity());

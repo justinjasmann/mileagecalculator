@@ -8,5 +8,6 @@
     
     <dimen name="results_fragment_row_font_size">20sp</dimen>
     <dimen name="results_fragment_target_mileage_font_size">50sp</dimen>
+    <dimen name="results_fragment_subtitle_font_size">10sp</dimen>
     
 </resources>

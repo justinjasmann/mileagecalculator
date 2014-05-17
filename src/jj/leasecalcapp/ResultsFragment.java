@@ -7,6 +7,7 @@ import org.joda.time.Weeks;
 import org.joda.time.Years;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,14 +16,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
-import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class ResultsFragment extends Fragment
 {
+    private InputMethodManager inputMethodManager;
+
     private TextView purchaseDate;
     private TextView currentDate;
     private TextView timeDiffInDays;
@@ -37,6 +42,13 @@ public class ResultsFragment extends Fragment
 
     public ResultsFragment()
     {
+    }
+    
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     @Override
@@ -62,18 +74,22 @@ public class ResultsFragment extends Fragment
             @Override
             public void onFocusChange(View view, boolean hasFocus)
             {
+                Log.d(ResultsFragment.class.getName(), "view: " + view);
+                Log.d(ResultsFragment.class.getName(), "id: " + view.getId());
+                Log.d(ResultsFragment.class.getName(), "hasFocus: " + hasFocus);
                 if (view.getId() == R.id.current_mileage)
                 {
                     currentMileage.setHint(null);
                 }
             }
         });
-        currentMileage.setOnKeyListener(new OnKeyListener()
+
+        currentMileage.setOnEditorActionListener(new OnEditorActionListener()
         {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent event)
             {
-                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER)
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT)
                 {
                     int targetMileageInt = Integer.valueOf(targetMileage.getText().toString());
                     int currentMileageInt = Integer.valueOf(currentMileage.getText().toString());
@@ -89,6 +105,8 @@ public class ResultsFragment extends Fragment
 
                     mileageDifferenceLine.setVisibility(View.VISIBLE);
                     mileageDifference.setText(String.valueOf(Math.abs(difference)));
+                    inputMethodManager.hideSoftInputFromWindow(currentMileage.getWindowToken(), 0);
+                    currentMileage.clearFocus();
                     return true;
                 }
                 return false;
@@ -124,6 +142,7 @@ public class ResultsFragment extends Fragment
         mileageDifferenceLine.setVisibility(View.INVISIBLE);
         currentMileage.setText(null);
         currentMileage.requestFocus();
+        inputMethodManager.showSoftInput(currentMileage, InputMethodManager.SHOW_IMPLICIT);
     }
 
     private void updateUi(Results results)

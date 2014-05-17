@@ -10,9 +10,15 @@ import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class ResultsFragment extends Fragment
@@ -24,6 +30,10 @@ public class ResultsFragment extends Fragment
     private TextView timeDiffInMonths;
     private TextView timeDiffInYears;
     private TextView targetMileage;
+    private EditText currentMileage;
+    private View mileageDifferenceLine;
+    private TextView mileageDifference;
+    private Button resetSummation;
 
     public ResultsFragment()
     {
@@ -41,6 +51,58 @@ public class ResultsFragment extends Fragment
         timeDiffInMonths = (TextView) rootView.findViewById(R.id.timeDiffInMonths);
         timeDiffInYears = (TextView) rootView.findViewById(R.id.timeDiffInYears);
         targetMileage = (TextView) rootView.findViewById(R.id.target_mileage);
+        currentMileage = (EditText) rootView.findViewById(R.id.current_mileage);
+        mileageDifferenceLine = (View) rootView.findViewById(R.id.mileage_difference_line);
+        mileageDifference = (TextView) rootView.findViewById(R.id.mileage_difference);
+        resetSummation = (Button) rootView.findViewById(R.id.reset_summation);
+
+        currentMileage.setHintTextColor(getResources().getColor(R.color.light_grey));
+        currentMileage.setOnFocusChangeListener(new OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus)
+            {
+                if (view.getId() == R.id.current_mileage)
+                {
+                    currentMileage.setHint(null);
+                }
+            }
+        });
+        currentMileage.setOnKeyListener(new OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER)
+                {
+                    int targetMileageInt = Integer.valueOf(targetMileage.getText().toString());
+                    int currentMileageInt = Integer.valueOf(currentMileage.getText().toString());
+                    int difference = targetMileageInt - currentMileageInt;
+                    if (difference < 0)
+                    {
+                        mileageDifference.setTextColor(getResources().getColor(R.color.red));
+                    }
+                    else if (difference > 0)
+                    {
+                        mileageDifference.setTextColor(getResources().getColor(R.color.green));
+                    }
+
+                    mileageDifferenceLine.setVisibility(View.VISIBLE);
+                    mileageDifference.setText(String.valueOf(Math.abs(difference)));
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        resetSummation.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                resetSummation();
+            }
+        });
 
         if (!FirstTimeHelper.isFirstTime(getActivity()))
         {
@@ -54,6 +116,14 @@ public class ResultsFragment extends Fragment
         }
 
         return rootView;
+    }
+
+    private void resetSummation()
+    {
+        mileageDifference.setText(null);
+        mileageDifferenceLine.setVisibility(View.INVISIBLE);
+        currentMileage.setText(null);
+        currentMileage.requestFocus();
     }
 
     private void updateUi(Results results)

@@ -89,7 +89,11 @@ public class ResultsFragment extends Fragment
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent event)
             {
-                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT)
+                Log.d(ResultsFragment.class.getName(), "testView: " + textView.toString());
+                Log.d(ResultsFragment.class.getName(), "actionId: " + actionId);
+                Log.d(ResultsFragment.class.getName(), "event: " + ((null != event) ? event.toString() : ""));
+                if ((actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) ||
+                    (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER))
                 {
                     int targetMileageInt = Integer.valueOf(targetMileage.getText().toString());
                     int currentMileageInt = Integer.valueOf(currentMileage.getText().toString());

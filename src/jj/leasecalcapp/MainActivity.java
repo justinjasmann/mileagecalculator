@@ -62,7 +62,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (requestCode == SETTINGS_ACTIVITY_REQUEST)
+        if (requestCode == SETTINGS_ACTIVITY_REQUEST && resultCode == RESULT_OK)
         {
             FragmentManager fragmentManager = getFragmentManager();
             Fragment resultsFragment = fragmentManager.findFragmentByTag(FragmentTags.RESULTS_FRAGMENT);

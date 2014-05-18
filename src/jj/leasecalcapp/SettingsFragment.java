@@ -1,5 +1,6 @@
 package jj.leasecalcapp;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
@@ -31,10 +32,13 @@ public class SettingsFragment extends PreferenceFragment
             public void onClick(View view)
             {
                 PreferencesUtil.resetAll(getActivity().getApplicationContext());
-                getActivity().finish();
+
+                Activity settingsActivity = getActivity();
+                settingsActivity.setResult(Activity.RESULT_OK);
+                settingsActivity.finish();
             }
         });
-        
+
         linearLayout.addView(resetData);
         return linearLayout;
     }

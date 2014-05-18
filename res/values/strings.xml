@@ -19,7 +19,7 @@
     <string name="timeDiffInYearsLabel">Years</string>
     <string name="mileage_units_prefs_label">Mileage Units</string>
     <string name="button_reset">Start over?</string>
-    <string name="current_mileage_hint">Currently?</string>
+    <string name="current_mileage_hint">Odometer</string>
     <string name="reset_summation">Reset</string>
 
 </resources>

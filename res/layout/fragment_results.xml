@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -19,9 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="3" >
@@ -30,6 +29,7 @@
             android:id="@+id/details_left_column"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:orientation="vertical" >
 
@@ -38,7 +38,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:paddingRight="10dp"
                 android:text="@string/purchaseDateLabel"
                 android:textSize="@dimen/results_fragment_row_font_size" />
 
@@ -47,7 +46,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:paddingRight="10dp"
                 android:text="@string/currentDateLabel"
                 android:textSize="@dimen/results_fragment_row_font_size" />
 
@@ -56,7 +54,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:paddingRight="10dp"
                 android:text="@string/timeDiffInDaysLabel"
                 android:textSize="@dimen/results_fragment_row_font_size" />
 
@@ -65,7 +62,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:paddingRight="10dp"
                 android:text="@string/timeDiffInWeeksLabel"
                 android:textSize="@dimen/results_fragment_row_font_size" />
 
@@ -74,7 +70,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:paddingRight="10dp"
                 android:text="@string/timeDiffInMonthsLabel"
                 android:textSize="@dimen/results_fragment_row_font_size" />
 
@@ -83,7 +78,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:paddingRight="10dp"
                 android:text="@string/timeDiffInYearsLabel"
                 android:textSize="@dimen/results_fragment_row_font_size" />
         </LinearLayout>
@@ -99,6 +93,7 @@
             android:id="@+id/details_right_column"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:orientation="vertical" >
 
@@ -107,7 +102,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:paddingLeft="10dp"
                 android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
@@ -115,7 +109,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:paddingLeft="10dp"
                 android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
@@ -123,7 +116,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:paddingLeft="10dp"
                 android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
@@ -131,7 +123,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:paddingLeft="10dp"
                 android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
@@ -139,7 +130,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:paddingLeft="10dp"
                 android:textSize="@dimen/results_fragment_row_font_size" />
 
             <TextView
@@ -147,7 +137,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:paddingLeft="10dp"
                 android:textSize="@dimen/results_fragment_row_font_size" />
         </LinearLayout>
     </LinearLayout>
@@ -156,8 +145,6 @@
         android:id="@+id/target"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
@@ -173,8 +160,6 @@
         android:id="@+id/current"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
@@ -186,8 +171,8 @@
             android:gravity="center_horizontal"
             android:hint="@string/current_mileage_hint"
             android:imeOptions="actionDone"
-            android:maxLength="6"
             android:inputType="number"
+            android:maxLength="6"
             android:textSize="@dimen/results_fragment_target_mileage_font_size" >
         </EditText>
     </LinearLayout>
@@ -197,7 +182,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:orientation="vertical" >
 
@@ -223,9 +207,7 @@
         android:id="@+id/reset_summation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="@string/reset_summation" />
 
 </LinearLayout>

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_label">LeaseCalcApp</string>
+    <string name="app_label">MileageCalculator</string>
     <string name="settings_label">Settings</string>
     <string name="action_settings">Settings</string>
-    <string name="buttonText">Button</string>
     <string name="welcomeTitle">Welcome!</string>
     <string name="welcomeText">We see that it\'s your first time here, so we\'re going to have to set some fields.</string>
     <string name="startDateTitle">Lease Start Date</string>

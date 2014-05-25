@@ -43,7 +43,7 @@ public class ResultsFragment extends Fragment
     public ResultsFragment()
     {
     }
-    
+
     @Override
     public void onStart()
     {
@@ -74,12 +74,10 @@ public class ResultsFragment extends Fragment
             @Override
             public void onFocusChange(View view, boolean hasFocus)
             {
-                Log.d(ResultsFragment.class.getName(), "view: " + view);
-                Log.d(ResultsFragment.class.getName(), "id: " + view.getId());
-                Log.d(ResultsFragment.class.getName(), "hasFocus: " + hasFocus);
-                if (view.getId() == R.id.current_mileage)
+                if (view.getId() == R.id.current_mileage && hasFocus == true)
                 {
                     currentMileage.setHint(null);
+                    currentMileage.setText(null);
                 }
             }
         });
@@ -89,14 +87,12 @@ public class ResultsFragment extends Fragment
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent event)
             {
-                Log.d(ResultsFragment.class.getName(), "testView: " + textView.toString());
-                Log.d(ResultsFragment.class.getName(), "actionId: " + actionId);
-                Log.d(ResultsFragment.class.getName(), "event: " + ((null != event) ? event.toString() : ""));
-                if ((actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) ||
-                    (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER))
+                if ((actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT)
+                        || (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER))
                 {
                     int targetMileageInt = Integer.valueOf(targetMileage.getText().toString());
-                    int currentMileageInt = Integer.valueOf(currentMileage.getText().toString());
+                    int currentMileageInt = getCurrentMileageInt();
+
                     int difference = targetMileageInt - currentMileageInt;
                     if (difference < 0)
                     {
@@ -107,6 +103,7 @@ public class ResultsFragment extends Fragment
                         mileageDifference.setTextColor(getResources().getColor(R.color.green));
                     }
 
+                    currentMileage.setText(String.valueOf(currentMileageInt));
                     mileageDifferenceLine.setVisibility(View.VISIBLE);
                     mileageDifference.setText(String.valueOf(Math.abs(difference)));
                     inputMethodManager.hideSoftInputFromWindow(currentMileage.getWindowToken(), 0);
@@ -138,6 +135,17 @@ public class ResultsFragment extends Fragment
         }
 
         return rootView;
+    }
+
+    private int getCurrentMileageInt()
+    {
+        int currentMileageInt = 0;
+        String currentMileageString = currentMileage.getText().toString();
+        if (!currentMileageString.isEmpty())
+        {
+            currentMileageInt = Integer.valueOf(currentMileage.getText().toString());
+        }
+        return currentMileageInt;
     }
 
     private void resetSummation()
